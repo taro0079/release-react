@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import './App.css'
+import rpstLogo from '/rpst.svg'
+import { motion } from 'framer-motion'
+import Button from './components/Button/Button'
 
 type Author = {
     name: string
@@ -23,7 +26,6 @@ const copyToClipboard = (text: string) => {
             console.error(err.message)
         }
     }
-
 }
 
 const App = () => {
@@ -34,18 +36,18 @@ const App = () => {
     const [extractData, setExtractData] = useState<(number | null)[]>([])
     const [copied, setCopied] = useState<boolean>(false)
     const [prNumber, setPrNumber] = useState<number>(0)
-    // const url = import.meta.env.VITE_GITHUB_URL + 'pulls/3977/commits'
-    const url = import.meta.env.VITE_GITHUB_URL + 'pulls/' + prNumber + '/commits'
+    const url =
+        import.meta.env.VITE_GITHUB_URL + 'pulls/' + prNumber + '/commits'
 
     const handleCopyButton = () => {
-        copyToClipboard(extractData.join(","))
+        copyToClipboard(extractData.join(','))
         setCopied(true)
     }
 
     const fetchData = async () => {
         setError(null)
         if (prNumber === 0) {
-            setError("PRの番号を0以外で入力してね")
+            setError('PRの番号を0以外で入力してね')
             return
         }
         setLoading(true)
@@ -96,47 +98,76 @@ const App = () => {
         const ticketNumber = extractTicketNumber(editedData)
         setExtractData(ticketNumber)
     }
+    const item = {
+        visible: { opacity: 1, y: 0 },
+        hidden: { opacity: 0, y: 100 },
+    }
     return (
-        <div>
+        <motion.div
+            transition={{ ease: 'easeOut', duration: 1 }}
+            initial="hidden"
+            animate="visible"
+            variants={item}
+        >
             <div>
+                <img src={rpstLogo} />
                 <h1>りりーすつーる べーたばん</h1>
             </div>
             <div className="staging">
                 <p>PRの番号をいれて</p>
                 <input onChange={handlePrInputChange}></input>
-                <button onClick={fetchData}>Fetch Data</button>
+                <Button onClick={fetchData}>Fetch Data</Button>
             </div>
 
             {loading && <p>Loading ...</p>}
             {error && <p>Error: {error}</p>}
             {data &&
                 data.map((d, i) => (
-                    <p key={i} style={{ textAlign: 'left' }}>
+                    <motion.p
+                        key={i}
+                        style={{ textAlign: 'left' }}
+                        transition={{
+                            ease: 'easeOut',
+                            duration: 1,
+                        }}
+                        initial="hidden"
+                        animate="visible"
+                        variants={item}
+                    >
                         {d}
-                    </p>
+                    </motion.p>
                 ))}
             {data && (
-                <div className="section">
+                <motion.div
+                    className="section"
+                    transition={{
+                        ease: 'easeOut',
+                        duration: 1,
+                    }}
+                    initial="hidden"
+                    animate="visible"
+                    variants={item}
+                >
                     ↓以下で編集↓
                     <textarea
                         value={editedData}
                         rows={20}
                         onChange={handleTextAreaChange}
                     />
-                    <button onClick={handleExtractButtonClick}>
+                    <Button onClick={handleExtractButtonClick}>
                         チケット番号 抽出
-                    </button>
+                    </Button>
                     {extractData.length > 0 && (
                         <div>
                             <p>チケット番号</p>
                             <p>{extractData.join(',')}</p>
-                            <button onClick={handleCopyButton}>Copy</button>
-                            { copied && <p>コピーした！</p>}
+                            <Button onClick={handleCopyButton}>Copy</Button>
+                            {copied && <p>コピーした！</p>}
                         </div>
                     )}
-                </div>
+                </motion.div>
             )}
-        </div>
+        </motion.div>
     )
 }
 
