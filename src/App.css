@@ -1,7 +1,7 @@
 #root {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 4rem;
     text-align: center;
 }
 
@@ -48,7 +48,14 @@
     width: 100px;
     z-index: 100;
     position: absolute;
-    right: 40%;
+    right: 30%;
+
+}
+.selfimage {
+    width: 100px;
+    z-index: 90;
+    position: absolute;
+    right: 25%;
 
 }
 

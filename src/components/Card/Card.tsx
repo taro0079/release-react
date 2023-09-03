@@ -21,9 +21,9 @@ const Card: React.FC<Props> = (props: Props) => {
             }}
             animate="visible"
             variants={variant}
-            className="card"
         >
-            {props.children}
+            <div className="card">{props.children}</div>
+            <img className='selfimage' src="/self.png" width={'100px'} />
         </motion.div>
     )
 }

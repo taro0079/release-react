@@ -159,7 +159,15 @@ const App = () => {
                         チケット番号 抽出
                     </Button>
                     {extractData.length > 0 && (
-                        <div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: '40px',
+                            }}
+                        >
                             <div>
                                 <p>チケット番号</p>
                                 <p>{extractData.join(',')}</p>
