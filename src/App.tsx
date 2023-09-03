@@ -3,6 +3,7 @@ import './App.css'
 import rpstLogo from '/rpst.svg'
 import { motion } from 'framer-motion'
 import Button from './components/Button/Button'
+import Card from './components/Card/Card'
 
 type Author = {
     name: string
@@ -159,10 +160,14 @@ const App = () => {
                     </Button>
                     {extractData.length > 0 && (
                         <div>
-                            <p>チケット番号</p>
-                            <p>{extractData.join(',')}</p>
-                            <Button onClick={handleCopyButton}>Copy</Button>
-                            {copied && <p>コピーした！</p>}
+                            <div>
+                                <p>チケット番号</p>
+                                <p>{extractData.join(',')}</p>
+                            </div>
+                            <div className='copy-container'>
+                                <Button onClick={handleCopyButton}>Copy</Button>
+                                {copied && <Card>こぴーした！</Card>}
+                            </div>
                         </div>
                     )}
                 </motion.div>
