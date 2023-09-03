@@ -59,7 +59,6 @@ input {
     padding: 10px 10px;
     border: none;
     border-radius: 3px;
-    background: #eff1f5;
     line-height: 1.5;
     margin: 10px 10px;
 }
@@ -69,11 +68,9 @@ textarea {
     border: none;
     border-radius: 3px;
     line-height: 1.5;
-    background: #eff1f5;
     margin: 10px 10px;
     resize: none;
-    
-
+    font-size: 16px;
 }
 .section {
     margin: 50px 0px;

@@ -15,17 +15,40 @@ type CommitData = {
     commit: Commit
 }
 
+const copyToClipboard = (text: string) => {
+    try {
+        navigator.clipboard.writeText(text)
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            console.error(err.message)
+        }
+    }
+
+}
+
 const App = () => {
     const [data, setData] = useState<string[] | null>(null)
     const [editedData, setEditedData] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
     const [extractData, setExtractData] = useState<(number | null)[]>([])
-    const url = import.meta.env.VITE_GITHUB_URL + 'pulls/3977/commits'
+    const [copied, setCopied] = useState<boolean>(false)
+    const [prNumber, setPrNumber] = useState<number>(0)
+    // const url = import.meta.env.VITE_GITHUB_URL + 'pulls/3977/commits'
+    const url = import.meta.env.VITE_GITHUB_URL + 'pulls/' + prNumber + '/commits'
+
+    const handleCopyButton = () => {
+        copyToClipboard(extractData.join(","))
+        setCopied(true)
+    }
 
     const fetchData = async () => {
-        setLoading(true)
         setError(null)
+        if (prNumber === 0) {
+            setError("PRの番号を0以外で入力してね")
+            return
+        }
+        setLoading(true)
         try {
             const response = await fetch(url, {
                 headers: {
@@ -55,6 +78,11 @@ const App = () => {
     ) => {
         setEditedData(event.target.value)
     }
+    const handlePrInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setPrNumber(Number(event.target.value))
+    }
     const extractTicketNumber = (text: string) => {
         const textArray = text.split('\n')
         const extracts = textArray.map((message) => {
@@ -75,7 +103,7 @@ const App = () => {
             </div>
             <div className="staging">
                 <p>PRの番号をいれて</p>
-                <input type="number"></input>
+                <input onChange={handlePrInputChange}></input>
                 <button onClick={fetchData}>Fetch Data</button>
             </div>
 
@@ -102,6 +130,8 @@ const App = () => {
                         <div>
                             <p>チケット番号</p>
                             <p>{extractData.join(',')}</p>
+                            <button onClick={handleCopyButton}>Copy</button>
+                            { copied && <p>コピーした！</p>}
                         </div>
                     )}
                 </div>
