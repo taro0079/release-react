@@ -54,6 +54,30 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+input {
+    width: 100%;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 3px;
+    background: #eff1f5;
+    line-height: 1.5;
+    margin: 10px 10px;
+}
+textarea {
+    width: 100%;
+    padding: 20px 20px;
+    border: none;
+    border-radius: 3px;
+    line-height: 1.5;
+    background: #eff1f5;
+    margin: 10px 10px;
+    resize: none;
+    
+
+}
+.section {
+    margin: 50px 0px;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

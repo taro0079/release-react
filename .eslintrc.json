@@ -1,0 +1,7 @@
+{
+  "extends": "airbub-base",
+  "env": { "browser": true },
+  "rules": {
+    "semi": ["error", "never"]
+  }
+}
