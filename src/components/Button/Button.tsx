@@ -25,4 +25,3 @@ const Button: React.FC<Props> = ({ onClick, children }) => {
 }
 
 export default Button
-

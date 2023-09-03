@@ -164,7 +164,7 @@ const App = () => {
                                 <p>チケット番号</p>
                                 <p>{extractData.join(',')}</p>
                             </div>
-                            <div className='copy-container'>
+                            <div className="copy-container">
                                 <Button onClick={handleCopyButton}>Copy</Button>
                                 {copied && <Card>こぴーした！</Card>}
                             </div>
