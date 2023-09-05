@@ -4,6 +4,7 @@ import rpstLogo from '/rpst.svg'
 import { motion } from 'framer-motion'
 import Button from './components/Button/Button'
 import Card from './components/Card/Card'
+import PokeLoad from './components/PokeLoad/pokeLoad'
 
 type Author = {
     name: string
@@ -120,7 +121,7 @@ const App = () => {
                 <Button onClick={fetchData}>Fetch Data</Button>
             </div>
 
-            {loading && <p>Loading ...</p>}
+            {loading && <PokeLoad />}
             {error && <p>Error: {error}</p>}
             {data &&
                 data.map((d, i) => (
