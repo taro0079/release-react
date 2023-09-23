@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import rpstLogo from '/rpst.svg'
 import { motion } from 'framer-motion'
 import Button from './components/Button/Button'
 import Card from './components/Card/Card'
 import PokeLoad from './components/PokeLoad/pokeLoad'
+import { PokemonResponse } from './types'
+import getPokemon from './utils/pokeFetch'
+import PokeLoader from './components/PokeLoader/PokeLoader'
 
 type Author = {
     name: string
@@ -38,8 +41,17 @@ const App = () => {
     const [extractData, setExtractData] = useState<(number | null)[]>([])
     const [copied, setCopied] = useState<boolean>(false)
     const [prNumber, setPrNumber] = useState<number>(0)
+    const [poke, setPoke] = useState<PokemonResponse | null>(null)
     const url =
         import.meta.env.VITE_GITHUB_URL + 'pulls/' + prNumber + '/commits'
+
+    useEffect(() => {
+        const fetchPoke = async()=>{
+            const data = await getPokemon()
+            setPoke(data)
+        }
+        fetchPoke()
+    }, [])
 
     const handleCopyButton = () => {
         copyToClipboard(extractData.join(','))
@@ -121,7 +133,9 @@ const App = () => {
                 <Button onClick={fetchData}>Fetch Data</Button>
             </div>
 
-            {loading && <PokeLoad />}
+            {/*{loading && <PokeLoad } */}
+            {loading && poke && <PokeLoader pokemon={poke} />}
+
             {error && <p>Error: {error}</p>}
             {data &&
                 data.map((d, i) => (
