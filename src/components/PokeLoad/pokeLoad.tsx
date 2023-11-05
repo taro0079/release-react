@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import LoadingText from '../LoadingText/LoadingText'
 
-type PokemonResponse = {
+export type PokemonResponse = {
   sprites: {
     front_default: string
     back_default: string
