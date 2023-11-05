@@ -32,6 +32,10 @@ const copyToClipboard = (text: string) => {
         }
     }
 }
+const preloadImage = (url) => {
+    const img = new Image()
+    img.src = url;
+}
 
 const App = () => {
     const [data, setData] = useState<string[] | null>(null)
@@ -52,6 +56,10 @@ const App = () => {
         }
         fetchPoke()
     }, [])
+    preloadImage(poke?.sprites.front_default);
+
+    
+
 
     const handleCopyButton = () => {
         copyToClipboard(extractData.join(','))
